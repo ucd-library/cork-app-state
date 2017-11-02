@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ucd-lib/cork-app-utils": "^2.0.0"
+    "@polymer/app-route": "^3.0.0-pre.1",
+    "@polymer/polymer": "^3.0.0-pre.1",
+    "@ucd-lib/cork-app-utils": "^2.0.0",
+    "query-string": "^5.0.1"
   }
 }
