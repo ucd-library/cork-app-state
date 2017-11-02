@@ -1,6 +1,6 @@
 {
   "name": "@ucd-lib/cork-app-state",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Base AppStateModel class",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "dependencies": {
     "@polymer/app-route": "^3.0.0-pre.1",
     "@polymer/polymer": "^3.0.0-pre.1",
-    "@ucd-lib/cork-app-utils": "^2.0.0",
+    "@ucd-lib/cork-app-utils": "^2.0.2",
     "query-string": "^5.0.1"
   }
 }

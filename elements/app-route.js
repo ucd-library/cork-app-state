@@ -3,7 +3,7 @@ import "@polymer/app-route/app-location"
 
 import {Mixin, EventInterface} from "@ucd-lib/cork-app-utils"
 import queryString from "query-string"
-import AppStateInterface from "./lib/AppStateInterface"
+import AppStateInterface from "../lib/AppStateInterface"
 
 class AppRoute extends Mixin(PolymerElement)
       .with(EventInterface, AppStateInterface) {
