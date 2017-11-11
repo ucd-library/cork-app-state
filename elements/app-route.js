@@ -19,11 +19,12 @@ class AppRoute extends Mixin(PolymerElement)
       },
       appRoutes : {
         type : Array,
-        value : []
+        value : [],
+        observer : '_makeRegex'
       },
       appRoutesRegex : {
         type : RegExp,
-        value : '_makeRegex(appRoutes)'
+        value : /\//
       }
     }
   }
@@ -31,6 +32,7 @@ class AppRoute extends Mixin(PolymerElement)
   constructor() {
     super();
     window.addEventListener('location-changed', this._onLocationChange.bind(this));
+    window.addEventListener('popstate', this._onLocationChange.bind(this));
   }
 
   ready() {
@@ -39,14 +41,22 @@ class AppRoute extends Mixin(PolymerElement)
   }
 
   _makeRegex() {
-    let re = '^('+this.appRoutes
-                  .map(route => '/'+route)
-                  .push('/')
-                  .join('|') + ')';
+    let arr = this.appRoutes.splice(0);
+    arr.push('');
+
+    let re = '^(' +
+                arr.map(route => '/'+route)
+                   .join('|') 
+             + ')';
+
     this.appRoutesRegex = new RegExp(re, 'i');
   }
 
   _onLocationChange() {
+    this.debounce('_onLocationChange', this._onLocationChangeAsync, 50);
+  }
+
+  _onLocationChangeAsync() {
     this.location = {
       pathname : window.location.pathname,
       path : window.location.pathname.replace(/(^\/|\/$)/g, '').split('/'),
