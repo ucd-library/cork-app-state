@@ -31,12 +31,23 @@ class AppRoute extends Mixin(PolymerElement)
 
   constructor() {
     super();
-    window.addEventListener('location-changed', this._onLocationChange.bind(this));
-    window.addEventListener('popstate', this._onLocationChange.bind(this));
+    this.AppStateModel.setLocationElement(this);
+    window.addEventListener('location-changed', this._onLocationChangeAsync.bind(this));
+    window.addEventListener('popstate', this._onLocationChangeAsync.bind(this));
   }
 
   ready() {
     super.ready();
+    this._onLocationChange();
+  }
+
+  /**
+   * Fired when user manually sets a path location.  Called from AppStateModel
+   * 
+   * @param {String} location 
+   */
+  setWindowLocation(location) {
+    window.history.pushState(null, null, location);
     this._onLocationChange();
   }
 
@@ -52,11 +63,11 @@ class AppRoute extends Mixin(PolymerElement)
     this.appRoutesRegex = new RegExp(re, 'i');
   }
 
-  _onLocationChange() {
-    this.debounce('_onLocationChange', this._onLocationChangeAsync, 50);
+  _onLocationChangeAsync() {
+    this.debounce('_onLocationChangeAsync', this._onLocationChange, 50);
   }
 
-  _onLocationChangeAsync() {
+  _onLocationChange() {
     this.location = {
       pathname : window.location.pathname,
       path : window.location.pathname.replace(/(^\/|\/$)/g, '').split('/'),
