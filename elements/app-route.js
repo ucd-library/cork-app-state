@@ -19,21 +19,18 @@ class AppRoute extends Mixin(PolymerElement)
       },
       appRoutes : {
         type : Array,
-        value : [],
-        observer : '_makeRegex'
+        value : []
       },
       appRoutesRegex : {
         type : RegExp,
-        value : /\//
+        computed : '_makeRegex(appRoutes)'
       }
     }
   }
 
   constructor() {
     super();
-    this.AppStateModel.setLocationElement(this);
-    window.addEventListener('location-changed', this._onLocationChangeAsync.bind(this));
-    window.addEventListener('popstate', this._onLocationChangeAsync.bind(this));
+    window.addEventListener('location-changed', this._onLocationChange.bind(this));
   }
 
   ready() {
@@ -41,30 +38,13 @@ class AppRoute extends Mixin(PolymerElement)
     this._onLocationChange();
   }
 
-  /**
-   * Fired when user manually sets a path location.  Called from AppStateModel
-   * 
-   * @param {String} location 
-   */
-  setWindowLocation(location) {
-    window.history.pushState(null, null, location);
-    this._onLocationChange();
-  }
-
   _makeRegex() {
-    let arr = this.appRoutes.splice(0);
-    arr.push('');
+    let arr = this.appRoutes.map(route => '/'+route)
+    arr.push('/');
 
-    let re = '^(' +
-                arr.map(route => '/'+route)
-                   .join('|') 
-             + ')';
-
-    this.appRoutesRegex = new RegExp(re, 'i');
-  }
-
-  _onLocationChangeAsync() {
-    this.debounce('_onLocationChangeAsync', this._onLocationChange, 50);
+    let re = '^('+ arr.join('|') + ')';
+    re = new RegExp(re, 'i');
+    return re;
   }
 
   _onLocationChange() {
