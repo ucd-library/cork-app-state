@@ -1,6 +1,6 @@
 {
   "name": "@ucd-lib/cork-app-state",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Base AppStateModel class",
   "main": "index.js",
   "scripts": {

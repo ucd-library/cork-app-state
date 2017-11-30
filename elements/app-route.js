@@ -30,6 +30,8 @@ class AppRoute extends Mixin(PolymerElement)
 
   constructor() {
     super();
+    // register the app-route element with the model
+    this.AppStateModel.setLocationElement(this);
     window.addEventListener('location-changed', this._onLocationChange.bind(this));
   }
 
