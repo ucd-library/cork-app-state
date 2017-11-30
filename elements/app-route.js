@@ -32,11 +32,22 @@ class AppRoute extends Mixin(PolymerElement)
     super();
     // register the app-route element with the model
     this.AppStateModel.setLocationElement(this);
-    window.addEventListener('location-changed', this._onLocationChange.bind(this));
+    window.addEventListener('location-changed', this._onLocationChangeAsync.bind(this));
+    window.addEventListener('popstate', this._onLocationChangeAsync.bind(this));
   }
 
   ready() {
     super.ready();
+    this._onLocationChange();
+  }
+
+  /**
+   * Fired when user manually sets a path location.  Called from AppStateModel
+   * 
+   * @param {String} location 
+   */
+  setWindowLocation(location) {
+    window.history.pushState(null, null, location);
     this._onLocationChange();
   }
 
@@ -47,6 +58,10 @@ class AppRoute extends Mixin(PolymerElement)
     let re = '^('+ arr.join('|') + ')';
     re = new RegExp(re, 'i');
     return re;
+  }
+
+  _onLocationChangeAsync() {
+    this.debounce('_onLocationChangeAsync', this._onLocationChange, 50);
   }
 
   _onLocationChange() {
