@@ -38,7 +38,7 @@ class AppRoute extends Mixin(PolymerElement)
 
   ready() {
     super.ready();
-    this._onLocationChangeAsync();
+    this._onLocationChange();
   }
 
   /**
