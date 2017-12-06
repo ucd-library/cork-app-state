@@ -32,13 +32,13 @@ class AppRoute extends Mixin(PolymerElement)
     super();
     // register the app-route element with the model
     this.AppStateModel.setLocationElement(this);
-    window.addEventListener('location-changed', this._onLocationChangeAsync.bind(this));
-    window.addEventListener('popstate', this._onLocationChangeAsync.bind(this));
+    window.addEventListener('location-changed', () => this._onLocationChangeAsync());
+    window.addEventListener('popstate', () => this._onLocationChangeAsync(true));
   }
 
   ready() {
     super.ready();
-    this._onLocationChange();
+    this._onLocationChangeAsync();
   }
 
   /**
@@ -48,7 +48,7 @@ class AppRoute extends Mixin(PolymerElement)
    */
   setWindowLocation(location) {
     window.history.pushState(null, null, location);
-    this._onLocationChange();
+    this._onLocationChangeAsync();
   }
 
   _makeRegex() {
@@ -60,15 +60,16 @@ class AppRoute extends Mixin(PolymerElement)
     return re;
   }
 
-  _onLocationChangeAsync() {
-    this.debounce('_onLocationChangeAsync', this._onLocationChange, 50);
+  _onLocationChangeAsync(popstate) {
+    this.debounce('_onLocationChangeAsync', () => this._onLocationChange(popstate), 50);
   }
 
-  _onLocationChange() {
+  _onLocationChange(popstate = false) {
     this.location = {
       pathname : window.location.pathname,
       path : window.location.pathname.replace(/(^\/|\/$)/g, '').split('/'),
-      query : queryString.parse(window.location.search)
+      query : queryString.parse(window.location.search),
+      popstate
     }
 
     this._setAppState({
