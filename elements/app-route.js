@@ -44,7 +44,12 @@ class AppRoute extends Mixin(PolymerElement)
    * @param {String} location 
    */
   setWindowLocation(location) {
-    window.history.pushState(null, null, location);
+    if( window.history.state &&
+        window.history.state.location === location )  {
+      return;
+    }
+
+    window.history.pushState({location}, null, location);
     this._onLocationChangeAsync();
   }
 
