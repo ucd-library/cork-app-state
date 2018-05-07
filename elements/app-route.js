@@ -1,4 +1,4 @@
-import {Element as PolymerElement} from "@polymer/polymer/polymer-element"
+import {PolymerElement} from "@polymer/polymer/polymer-element"
 import "@polymer/app-route/app-location"
 
 import {Mixin, EventInterface} from "@ucd-lib/cork-app-utils"
