@@ -1,4 +1,4 @@
-import {PolymerElement} from "@polymer/polymer/polymer-element"
+import {PolymerElement, html} from "@polymer/polymer/polymer-element"
 import "@polymer/app-route/app-location"
 
 import {Mixin, EventInterface} from "@ucd-lib/cork-app-utils"
@@ -9,7 +9,7 @@ class AppRoute extends Mixin(PolymerElement)
       .with(EventInterface, AppStateInterface) {
   
   static get template() {
-    return '<app-location url-space-regex="[[appRoutesRegex]]"></app-location>';
+    return html`<app-location url-space-regex="[[appRoutesRegex]]"></app-location>`;
   }
 
   static get properties() {
