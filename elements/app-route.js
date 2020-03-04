@@ -144,6 +144,7 @@ class AppRoute extends Mixin(PolymerElement)
       pathname : window.location.pathname,
       path : window.location.pathname.replace(/(^\/|\/$)/g, '').split('/'),
       query : queryString.parse(window.location.search),
+      hash : window.location.hash.replace(/^#/, '')
     };
     return location;
   }
