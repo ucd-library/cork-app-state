@@ -49,6 +49,7 @@ class AppRoute extends Mixin(PolymerElement)
       this._onLocationChange()
     });
     window.addEventListener('popstate', e => {
+      if( !e.state ) return;
       this.location = e.state.location;
       this._onLocationChange()
     });
@@ -130,7 +131,7 @@ class AppRoute extends Mixin(PolymerElement)
 
   _makeRegex() {
     let arr = this.appRoutes.map(route => '/'+route+'(/.*)?')
-    arr.push('/');
+    arr.push('/(\\?|#)+.*');
 
     let re = '^('+ arr.join('|') + ')$';
     re = new RegExp(re, 'i');
