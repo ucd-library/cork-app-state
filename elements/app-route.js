@@ -132,6 +132,7 @@ class AppRoute extends Mixin(PolymerElement)
   _makeRegex() {
     let arr = this.appRoutes.map(route => '/'+route+'(/.*)?')
     arr.push('/(\\?|#)+.*');
+    arr.push('/');
 
     let re = '^('+ arr.join('|') + ')$';
     re = new RegExp(re, 'i');
