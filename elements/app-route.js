@@ -38,7 +38,7 @@ class AppRoute extends Mixin(PolymerElement)
     this.AppStateModel.setLocationElement(this);
 
     this._setLocationObject();
-    let location = window.location.href.replace(window.location.origin, '');
+    let location = this._getFullPath();
     window.history.replaceState({location: this.location}, null, location);
     this._onLocationChange();
 
@@ -141,13 +141,17 @@ class AppRoute extends Mixin(PolymerElement)
 
   _setLocationObject(fullpath) {
     this.location = {
-      fullpath : fullpath || window.location.href.replace(window.location.origin, ''),
-      pathname : window.location.pathname,
-      path : window.location.pathname.replace(/(^\/|\/$)/g, '').split('/'),
+      fullpath : fullpath || this._getFullPath(),
+      pathname : window.location.pathname.replace(/^\/+/, '/'),
+      path : window.location.pathname.replace(/(^\/+|\/+$)/g, '').split('/'),
       query : queryString.parse(window.location.search),
       hash : window.location.hash.replace(/^#/, '')
     };
     return location;
+  }
+
+  _getFullPath() {
+      return window.location.href.replace(window.location.origin, '').replace(/^\/+/, '/');
   }
 
   _onLocationChange() {
