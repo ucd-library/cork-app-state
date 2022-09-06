@@ -1,6 +1,4 @@
-module.exports = {
-  AppStateInterface : require('./lib/AppStateInterface'),
-  AppStateModel : require('./lib/AppStateModel'),
-  AppStateStore : require('./lib/AppStateStore'),
-  'app-route' : require('./elements/app-route')
-}
+import AppStateModel from './lib/AppStateModel.js';
+import AppStateStore from './lib/AppStateStore.js';
+
+export {AppStateModel, AppStateStore};
