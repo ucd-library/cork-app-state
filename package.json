@@ -1,6 +1,6 @@
 {
   "name": "@ucd-lib/cork-app-state",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Base AppStateModel class",
   "main": "index.js",
   "type": "module",
@@ -8,8 +8,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "jrmerz@ucdavis.edu",
-  "license": "MIT",
-  "dependencies": {
-    "query-string": "^7.1.1"
-  }
+  "license": "MIT"
 }
